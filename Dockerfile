@@ -26,13 +26,6 @@ RUN yum -y update \
  && ln -fs /usr/bin/cmake28 /usr/bin/cmake \
  && ln -fs /usr/bin/cpack28 /usr/bin/cpack \
  && ln -fs /usr/bin/ctest28 /usr/bin/ctest \
- && wget --no-check-certificate https://sourceforge.net/projects/libjpeg-turbo/files/1.5.1/libjpeg-turbo-official-1.5.1.x86_64.rpm \
- && wget --no-check-certificate https://sourceforge.net/projects/libjpeg-turbo/files/1.5.1/libjpeg-turbo-official-1.5.1.i386.rpm \
- && rpm -i *.rpm \
- && rm *.rpm \
- && wget --no-check-certificate https://sourceforge.net/projects/libjpeg-turbo/files/1.5.1/libjpeg-turbo-1.5.1-jws.zip \
- && unzip -d /opt/libjpeg-turbo-jni *.zip \
- && rm *.zip \
  && git clone --depth=1 https://gitlab.com/debsigs/debsigs.git -b debsigs-0.1.15%7Eroam1 ~/src/debsigs \
  && pushd ~/src/debsigs \
  && perl Makefile.PL \
