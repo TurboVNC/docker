@@ -32,6 +32,31 @@ RUN yum -y update \
  && make install \
  && popd \
  && rm -rf ~/src \
+ && mkdir /usr/java \
+ && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u101-b13/jdk-8u101-linux-i586.tar.gz | tar -C /usr/java/ -xz \
+ && ln -fs /usr/java/jdk1.8.0_101 /usr/java/default32 \
+ && rm -rf /usr/java/default32/*src.zip \
+           /usr/java/default32/lib/missioncontrol \
+           /usr/java/default32/lib/visualvm \
+           /usr/java/default32/lib/*javafx* \
+           /usr/java/default32/jre/lib/plugin.jar \
+           /usr/java/default32/jre/bin/javaws \
+           /usr/java/default32/jre/lib/javaws.jar \
+           /usr/java/default32/jre/lib/desktop/* \
+           /usr/java/default32/jre/plugin/* \
+           /usr/java/default32/jre/lib/deploy* \
+           /usr/java/default32/jre/lib/*javafx* \
+           /usr/java/default32/jre/lib/*jfx* \
+           /usr/java/default32/jre/lib/ext/* \
+           /usr/java/default32/jre/lib/jfr* \
+           /usr/java/default32/jre/lib/oblique-fonts/* \
+           /usr/java/default32/jre/lib/i386/libdecora_sse.so \
+           /usr/java/default32/jre/lib/i386/libprism_*.so \
+           /usr/java/default32/jre/lib/i386/libfxplugins.so \
+           /usr/java/default32/jre/lib/i386/libglass.so \
+           /usr/java/default32/jre/lib/i386/libgstreamer-lite.so \
+           /usr/java/default32/jre/lib/i386/libjavafx*.so \
+           /usr/java/default32/jre/lib/i386/libjfx*.so \
  && cd / \
  && yum clean all \
  && find /usr/lib/locale/ -mindepth 1 -maxdepth 1 -type d -not -path '*en_US*' -exec rm -rf {} \; \
