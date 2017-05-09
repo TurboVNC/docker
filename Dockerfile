@@ -60,6 +60,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
            /usr/java/default32/jre/lib/i386/libgstreamer-lite.so \
            /usr/java/default32/jre/lib/i386/libjavafx*.so \
            /usr/java/default32/jre/lib/i386/libjfx*.so \
+           *.tar.gz \
  && curl -O -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u92-b14/jdk-8u92-linux-x64.rpm \
  && rpm -i jdk-8u92-linux-x64.rpm \
  && ln -fs /usr/java/jdk1.8.0_92 /usr/lib/java \
@@ -85,6 +86,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
            /usr/lib/java/jre/lib/amd64/libgstreamer-lite.so \
            /usr/lib/java/jre/lib/amd64/libjavafx*.so \
            /usr/lib/java/jre/lib/amd64/libjfx*.so \
+           *.rpm \
  && cd / \
  && yum clean all \
  && find /usr/lib/locale/ -mindepth 1 -maxdepth 1 -type d -not -path '*en_US*' -exec rm -rf {} \; \
