@@ -26,6 +26,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
     redhat-rpm-config \
     rpm-build.x86_64 \
     wget.x86_64 \
+    zip.x86_64 \
  && ln -fs /usr/bin/ccmake28 /usr/bin/ccmake \
  && ln -fs /usr/bin/cmake28 /usr/bin/cmake \
  && ln -fs /usr/bin/cpack28 /usr/bin/cpack \
