@@ -14,6 +14,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
     gnupg.x86_64 \
     glibc-devel \
     git.x86_64 \
+    java-1.7.0-openjdk-devel.x86_64 \
     libgcc.i386 \
     libX11-devel \
     libXext-devel \
@@ -36,8 +37,8 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
  && popd \
  && rm -rf ~/src \
  && mkdir /usr/java \
- && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u92-b14/jdk-8u92-linux-i586.tar.gz | tar -C /usr/java/ -xz \
- && mv /usr/java/jdk1.8.0_92 /usr/java/default32 \
+ && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-i586.tar.gz | tar -C /usr/java/ -xz \
+ && mv /usr/java/jdk1.8.0_144 /usr/java/default32 \
  && rm -rf /usr/java/default32/*src.zip \
            /usr/java/default32/lib/missioncontrol \
            /usr/java/default32/lib/visualvm \
@@ -61,32 +62,6 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
            /usr/java/default32/jre/lib/i386/libjavafx*.so \
            /usr/java/default32/jre/lib/i386/libjfx*.so \
            *.tar.gz \
- && curl -O -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u92-b14/jdk-8u92-linux-x64.rpm \
- && rpm -i jdk-8u92-linux-x64.rpm \
- && ln -fs /usr/java/jdk1.8.0_92 /usr/lib/java \
- && rm -rf /usr/lib/java/*src.zip \
-           /usr/lib/java/lib/missioncontrol \
-           /usr/lib/java/lib/visualvm \
-           /usr/lib/java/lib/*javafx* \
-           /usr/lib/java/jre/lib/plugin.jar \
-           /usr/lib/java/jre/bin/javaws \
-           /usr/lib/java/jre/lib/javaws.jar \
-           /usr/lib/java/jre/lib/desktop/* \
-           /usr/lib/java/jre/plugin/* \
-           /usr/lib/java/jre/lib/deploy* \
-           /usr/lib/java/jre/lib/*javafx* \
-           /usr/lib/java/jre/lib/*jfx* \
-           /usr/lib/java/jre/lib/ext/* \
-           /usr/lib/java/jre/lib/jfr* \
-           /usr/lib/java/jre/lib/oblique-fonts/* \
-           /usr/lib/java/jre/lib/amd64/libdecora_sse.so \
-           /usr/lib/java/jre/lib/amd64/libprism_*.so \
-           /usr/lib/java/jre/lib/amd64/libfxplugins.so \
-           /usr/lib/java/jre/lib/amd64/libglass.so \
-           /usr/lib/java/jre/lib/amd64/libgstreamer-lite.so \
-           /usr/lib/java/jre/lib/amd64/libjavafx*.so \
-           /usr/lib/java/jre/lib/amd64/libjfx*.so \
-           *.rpm \
  && cd / \
  && yum clean all \
  && find /usr/lib/locale/ -mindepth 1 -maxdepth 1 -type d -not -path '*en_US*' -exec rm -rf {} \; \
