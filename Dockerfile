@@ -52,8 +52,8 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
  && popd \
  && rm -rf ~/src \
  && mkdir /usr/java \
- && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u144-b01/090f390dda5b47b9b721c7dfaa008135/jdk-8u144-linux-i586.tar.gz | tar -C /usr/java/ -xz \
- && mv /usr/java/jdk1.8.0_144 /usr/java/default32 \
+ && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-i586.tar.gz | tar -C /usr/java/ -xz \
+ && mv /usr/java/jdk1.8.0_171 /usr/java/default32 \
  && rm -rf /usr/java/default32/*src.zip \
            /usr/java/default32/lib/missioncontrol \
            /usr/java/default32/lib/visualvm \
