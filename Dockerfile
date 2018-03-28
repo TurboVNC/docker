@@ -31,6 +31,20 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
  && ln -fs /usr/bin/cmake28 /usr/bin/cmake \
  && ln -fs /usr/bin/cpack28 /usr/bin/cpack \
  && ln -fs /usr/bin/ctest28 /usr/bin/ctest \
+ && mkdir ~/src \
+ && pushd ~/src \
+ && wget http://www.openssl.org/source/openssl-1.0.2n.tar.gz \
+ && tar xfz openssl-1.0.2n.tar.gz \
+ && pushd openssl-1.0.2n \
+ && ./config --prefix=/opt/openssl shared \
+ && make install \
+ && popd \
+ && popd \
+ && mv /opt/openssl/lib/libssl.so.1.0.0 /opt/openssl/lib/libssl.so.6 \
+ && mv /opt/openssl/lib/libcrypto.so.1.0.0 /opt/openssl/lib/libcrypto.so.6 \
+ && ln -fs libssl.so.6 /opt/openssl/lib/libssl.so \
+ && ln -fs libcrypto.so.6 /opt/openssl/lib/libcrypto.so \
+ && export LD_LIBRARY_PATH=/opt/openssl/lib:$LD_LIBRARY_PATH \
  && git clone --depth=1 https://gitlab.com/debsigs/debsigs.git -b debsigs-0.1.15%7Eroam1 ~/src/debsigs \
  && pushd ~/src/debsigs \
  && perl Makefile.PL \
@@ -74,6 +88,10 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
  && find /usr/share/{man,doc,info} -type f -delete \
  && rm -rf /etc/ld.so.cache \ && rm -rf /var/cache/ldconfig/* \
  && rm -rf /tmp/*
+
+# Set environment
+ENV PATH /opt/openssl/bin:${PATH}
+ENV LD_LIBRARY_PATH /opt/openssl/lib:${LD_LIBRARY_PATH}
 
 # Set default command
 CMD ["/bin/bash"]
