@@ -1,59 +1,47 @@
-FROM centos:5
+FROM centos:6
 
-RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/centos/\$releasever@baseurl=http://vault.centos.org/5.11@g' >/etc/yum.repos.d/CentOS-Base.repo.new \
- && mv -f /etc/yum.repos.d/CentOS-Base.repo.new /etc/yum.repos.d/CentOS-Base.repo \
- && cat /etc/yum.repos.d/libselinux.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/centos/\$releasever@baseurl=http://vault.centos.org/5.11@g' >/etc/yum.repos.d/libselinux.repo.new \
- && mv -f /etc/yum.repos.d/libselinux.repo.new /etc/yum.repos.d/libselinux.repo \
- && yum -y update \
+RUN yum -y update \
  && yum -y install epel-release.noarch \
  && yum -y install \
-    cmake28.x86_64 \
     dpkg.x86_64 \
     expect.x86_64 \
     gcc.x86_64 \
     gnupg.x86_64 \
-    glibc-devel \
+    glibc-devel.x86_64 \
+    glibc-devel.i686 \
     git.x86_64 \
-    java-1.7.0-openjdk-devel.x86_64 \
-    libgcc.i386 \
-    libX11-devel \
-    libXext-devel \
-    libXi-devel \
-    libXt-devel \
+    libgcc.i686 \
+    libX11-devel.x86_64 \
+    libX11-devel.i686 \
+    libXext-devel.x86_64 \
+    libXext-devel.i686 \
+    libXi-devel.x86_64 \
+    libXi-devel.i686 \
+    libXt-devel.x86_64 \
+    libXt-devel.i686 \
     make.x86_64 \
-    openssl-devel \
-    pam-devel \
+    openssl-devel.x86_64 \
+    openssl-devel.i686 \
+    pam-devel.x86_64 \
+    pam-devel.i686 \
     redhat-rpm-config \
     rpm-build.x86_64 \
     wget.x86_64 \
+    perl-ExtUtils-MakeMaker \
     zip.x86_64 \
- && ln -fs /usr/bin/ccmake28 /usr/bin/ccmake \
- && ln -fs /usr/bin/cmake28 /usr/bin/cmake \
- && ln -fs /usr/bin/cpack28 /usr/bin/cpack \
- && ln -fs /usr/bin/ctest28 /usr/bin/ctest \
+ && mkdir -p /opt/cmake \
+ && wget https://cmake.org/files/v3.11/cmake-3.11.4-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
  && mkdir ~/src \
- && pushd ~/src \
- && wget http://www.openssl.org/source/openssl-1.0.2n.tar.gz \
- && tar xfz openssl-1.0.2n.tar.gz \
- && pushd openssl-1.0.2n \
- && ./config --prefix=/opt/openssl shared \
- && make install \
- && popd \
- && popd \
- && mv /opt/openssl/lib/libssl.so.1.0.0 /opt/openssl/lib/libssl.so.6 \
- && mv /opt/openssl/lib/libcrypto.so.1.0.0 /opt/openssl/lib/libcrypto.so.6 \
- && ln -fs libssl.so.6 /opt/openssl/lib/libssl.so \
- && ln -fs libcrypto.so.6 /opt/openssl/lib/libcrypto.so \
- && export LD_LIBRARY_PATH=/opt/openssl/lib:$LD_LIBRARY_PATH \
- && git clone --depth=1 https://gitlab.com/debsigs/debsigs.git -b debsigs-0.1.15%7Eroam1 ~/src/debsigs \
+ && git clone --depth=1 https://gitlab.com/debsigs/debsigs.git ~/src/debsigs \
  && pushd ~/src/debsigs \
+ && git checkout debsigs-0.1.15%7Eroam1 \
  && perl Makefile.PL \
  && make install \
  && popd \
  && rm -rf ~/src \
  && mkdir /usr/java \
- && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u171-b11/512cd62ec5174c3487ac17c61aaa89e8/jdk-8u171-linux-i586.tar.gz | tar -C /usr/java/ -xz \
- && mv /usr/java/jdk1.8.0_171 /usr/java/default32 \
+ && curl -L -H "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jdk-8u191-linux-i586.tar.gz | tar -C /usr/java/ -xz \
+ && mv /usr/java/jdk1.8.0_191 /usr/java/default32 \
  && rm -rf /usr/java/default32/*src.zip \
            /usr/java/default32/lib/missioncontrol \
            /usr/java/default32/lib/visualvm \
@@ -77,6 +65,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
            /usr/java/default32/jre/lib/i386/libjavafx*.so \
            /usr/java/default32/jre/lib/i386/libjfx*.so \
            *.tar.gz \
+ && yum -y remove perl-ExtUtils-MakeMaker gdbm-devel db4-cxx \
  && cd / \
  && yum clean all \
  && find /usr/lib/locale/ -mindepth 1 -maxdepth 1 -type d -not -path '*en_US*' -exec rm -rf {} \; \
@@ -90,8 +79,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
  && rm -rf /tmp/*
 
 # Set environment
-ENV PATH /opt/openssl/bin:${PATH}
-ENV LD_LIBRARY_PATH /opt/openssl/lib:${LD_LIBRARY_PATH}
+ENV PATH /opt/cmake/bin:${PATH}
 
 # Set default command
 CMD ["/bin/bash"]
