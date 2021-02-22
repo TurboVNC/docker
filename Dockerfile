@@ -1,6 +1,10 @@
 FROM centos:6
 
-RUN yum -y update \
+RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/centos/\$releasever@baseurl=http://vault.centos.org/6.10@g' >/etc/yum.repos.d/CentOS-Base.repo.new \
+ && mv -f /etc/yum.repos.d/CentOS-Base.repo.new /etc/yum.repos.d/CentOS-Base.repo \
+ && cat /etc/yum.repos.d/CentOS-fasttrack.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/centos/\$releasever@baseurl=http://vault.centos.org/6.10@g' >/etc/yum.repos.d/CentOS-fasttrack.repo.new \
+ && mv -f /etc/yum.repos.d/CentOS-fasttrack.repo.new /etc/yum.repos.d/CentOS-fasttrack.repo \
+ && yum -y update \
  && yum -y install epel-release.noarch \
  && yum -y install \
     dpkg.x86_64 \
@@ -10,6 +14,9 @@ RUN yum -y update \
     glibc-devel.x86_64 \
     glibc-devel.i686 \
     git.x86_64 \
+    http://vault.centos.org/centos/6/updates/i386/Packages/java-1.8.0-openjdk-1.8.0.275.b01-0.el6_10.i686.rpm \
+    http://vault.centos.org/centos/6/updates/i386/Packages/java-1.8.0-openjdk-devel-1.8.0.275.b01-0.el6_10.i686.rpm \
+    http://vault.centos.org/centos/6/updates/i386/Packages/java-1.8.0-openjdk-headless-1.8.0.275.b01-0.el6_10.i686.rpm \
     libgcc.i686 \
     libX11-devel.x86_64 \
     libX11-devel.i686 \
@@ -30,9 +37,6 @@ RUN yum -y update \
     perl-ExtUtils-MakeMaker \
     zip.x86_64 \
     https://www.rpmfind.net/linux/remi/enterprise/6/remi/x86_64/gnupg1-1.4.23-1.el6.remi.x86_64.rpm \
-    http://mirror.centos.org/centos/6/os/i386/Packages/java-1.8.0-openjdk-1.8.0.171-8.b10.el6_9.i686.rpm \
-    http://mirror.centos.org/centos/6/os/i386/Packages/java-1.8.0-openjdk-devel-1.8.0.171-8.b10.el6_9.i686.rpm \
-    http://mirror.centos.org/centos/6/os/i386/Packages/java-1.8.0-openjdk-headless-1.8.0.171-8.b10.el6_9.i686.rpm \
  && mkdir -p /opt/cmake \
  && wget https://cmake.org/files/v3.11/cmake-3.11.4-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
  && mkdir ~/src \
