@@ -31,6 +31,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
     openssl-devel.i686 \
     pam-devel.x86_64 \
     pam-devel.i686 \
+    python34 \
     redhat-rpm-config \
     rpm-build.x86_64 \
     wget.x86_64 \
@@ -38,7 +39,7 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
     zip.x86_64 \
     https://www.rpmfind.net/linux/remi/enterprise/6/remi/x86_64/gnupg1-1.4.23-1.el6.remi.x86_64.rpm \
  && mkdir -p /opt/cmake \
- && wget https://cmake.org/files/v3.11/cmake-3.11.4-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
+ && wget https://cmake.org/files/v3.12/cmake-3.12.4-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
  && mkdir ~/src \
  && git clone --depth=1 https://gitlab.com/debsigs/debsigs.git ~/src/debsigs \
  && pushd ~/src/debsigs \
