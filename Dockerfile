@@ -39,7 +39,76 @@ RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | 
     zip.x86_64 \
     https://www.rpmfind.net/linux/remi/enterprise/6/remi/x86_64/gnupg1-1.4.23-1.el6.remi.x86_64.rpm \
  && mkdir -p /opt/cmake \
- && wget https://cmake.org/files/v3.12/cmake-3.12.4-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
+ && wget https://cmake.org/files/v3.14/cmake-3.14.7-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
+ && pushd /opt \
+ && wget 'https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz?revision=61c3be5d-5175-4db6-9030-b565aae9f766&hash=CB9A16FCC54DC7D64F8BBE8D740E38A8BF2C8665' \
+ && tar xf 'gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz?revision=61c3be5d-5175-4db6-9030-b565aae9f766&hash=CB9A16FCC54DC7D64F8BBE8D740E38A8BF2C8665' \
+ && rm 'gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz?revision=61c3be5d-5175-4db6-9030-b565aae9f766&hash=CB9A16FCC54DC7D64F8BBE8D740E38A8BF2C8665' \
+ && mv gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu gcc.arm64 \
+ && rm -rf /opt/gcc.arm64/aarch64-none-linux-gnu/bin/ld.gold \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/include \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/lib64/*atomic* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/lib64/*fortran* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/lib64/*gomp* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/lib64/*itm* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/lib64/*san* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/lib64/*++* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/bin \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/*atomic* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/*fortran* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/*gomp* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/*san* \
+           /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/*stdc++* \
+           /opt/gcc.arm64/bin/*++* \
+           /opt/gcc.arm64/bin/*fortran* \
+           /opt/gcc.arm64/bin/*gcov* \
+           /opt/gcc.arm64/bin/*gdb* \
+           /opt/gcc.arm64/bin/*ld.gold* \
+           /opt/gcc.arm64/lib/gcc/aarch64-none-linux-gnu/9.2.1/*gcov* \
+           /opt/gcc.arm64/lib/gcc/aarch64-none-linux-gnu/9.2.1/plugin \
+           /opt/gcc.arm64/libexec/gcc/aarch64-none-linux-gnu/9.2.1/cc1plus \
+           /opt/gcc.arm64/libexec/gcc/aarch64-none-linux-gnu/9.2.1/f951 \
+           /opt/gcc.arm64/libexec/gcc/aarch64-none-linux-gnu/9.2.1/lto* \
+           /opt/gcc.arm64/libexec/gcc/aarch64-none-linux-gnu/9.2.1/plugin \
+           /opt/gcc.arm64/share \
+ && chown -R root:root gcc.arm64 \
+ && mkdir arm64 \
+ && pushd arm64 \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/audit-libs-2.8.5-4.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/glibc-2.17-325.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/glibc-devel-2.17-325.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/krb5-devel-1.15.1-51.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libcap-ng-0.7.5-4.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libcom_err-devel-1.42.9-19.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libICE-1.0.9-9.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libICE-devel-1.0.9-9.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libSM-1.2.2-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libSM-devel-1.2.2-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libuuid-2.23.2-65.el7_9.1.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libX11-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libX11-devel-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXau-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXau-devel-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxcb-1.13-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXext-1.3.3-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXext-devel-1.3.3-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXfixes-devel-5.0.3-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXi-1.7.9-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXi-devel-1.7.9-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/openssl-libs-1.0.2k-24.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/openssl-devel-1.0.2k-24.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pam-1.1.8-23.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pam-devel-1.1.8-23.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/xorg-x11-proto-devel-2018.4-1.el7.noarch.rpm | cpio -idv \
+ && popd \
+ && popd \
+ && ln -fs /opt/arm64/usr/lib64/libm.so /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/libm.so \
+ && mkdir ~/rpm \
+ && pushd ~/rpm \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/rpm-4.11.3-48.el7_9.aarch64.rpm | cpio -idv \
+ && mv usr/lib/rpm/platform/aarch64-linux /usr/lib/rpm/platform \
+ && popd \
+ && rm -rf ~/rpm \
  && mkdir ~/src \
  && git clone --depth=1 https://gitlab.com/debsigs/debsigs.git ~/src/debsigs \
  && pushd ~/src/debsigs \
