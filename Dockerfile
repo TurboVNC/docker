@@ -115,6 +115,8 @@ RUN yum -y update \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pam-1.1.8-23.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pam-devel-1.1.8-23.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/xorg-x11-proto-devel-2018.4-1.el7.noarch.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/zlib-1.2.7-18.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/zlib-devel-1.2.7-18.el7.aarch64.rpm | cpio -idv \
  && popd \
  && popd \
  && ln -fs /opt/arm64/usr/lib64/libm.so /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/libm.so \
