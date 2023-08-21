@@ -19,29 +19,21 @@ RUN yum -y update \
     gnupg1 \
     gnupg2 \
     glibc-devel \
-    glibc-devel.i686 \
     ima-evm-utils-devel \
-    java-1.8.0-openjdk-devel.i686 \
     libacl-devel \
     libarchive-devel \
     libcap-devel \
     libtool \
     libX11-devel \
-    libX11-devel.i686 \
     libXext-devel \
-    libXext-devel.i686 \
     libXi-devel \
-    libXi-devel.i686 \
     libXt-devel \
-    libXt-devel.i686 \
     libzstd-devel \
     lua-devel \
     make \
     ncurses-devel \
     openssl-devel \
-    openssl-devel.i686 \
     pam-devel \
-    pam-devel.i686 \
     perl-ExtUtils-MakeMaker \
     popt-devel \
     python2-devel \
@@ -169,8 +161,6 @@ RUN yum -y update \
     xz-devel \
  && yum -y install \
     python3 \
- && mkdir /usr/java \
- && ln -fs /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.362.b08-1.el7_9.i386 /usr/java/default32 \
  && cd / \
  && yum clean all \
  && find /usr/lib/locale/ -mindepth 1 -maxdepth 1 -type d -not -path '*en_US*' -exec rm -rf {} \; \
