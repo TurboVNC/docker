@@ -52,7 +52,7 @@ RUN yum -y update \
     zip \
     zstd \
  && mkdir -p /opt/cmake \
- && wget https://cmake.org/files/v3.14/cmake-3.14.7-Linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
+ && wget https://cmake.org/files/v3.21/cmake-3.21.7-linux-x86_64.tar.gz -O - | tar xz -C /opt/cmake --strip-components 1 \
  && pushd /opt \
  && wget 'https://developer.arm.com/-/media/Files/downloads/gnu-a/9.2-2019.12/binrel/gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz?revision=61c3be5d-5175-4db6-9030-b565aae9f766&hash=CB9A16FCC54DC7D64F8BBE8D740E38A8BF2C8665' \
  && tar xf 'gcc-arm-9.2-2019.12-x86_64-aarch64-none-linux-gnu.tar.xz?revision=61c3be5d-5175-4db6-9030-b565aae9f766&hash=CB9A16FCC54DC7D64F8BBE8D740E38A8BF2C8665' \
