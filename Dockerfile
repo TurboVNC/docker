@@ -31,10 +31,12 @@ RUN yum -y update \
     libXfont2-devel \
     libXi-devel \
     libxkbfile-devel \
+    libxshmfence-devel \
     libXt-devel \
     libzstd-devel \
     lua-devel \
     make \
+    mesa-libgbm-devel \
     ncurses-devel \
     openssl-devel \
     pam-devel \
@@ -90,6 +92,7 @@ RUN yum -y update \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/audit-libs-2.8.5-4.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/bzip2-libs-1.0.6-13.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/bzip2-devel-1.0.6-13.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/expat-2.1.0-15.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/freetype-2.8-14.el7_9.1.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/freetype-devel-2.8-14.el7_9.1.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/glibc-2.17-326.el7_9.aarch64.rpm | cpio -idv \
@@ -97,6 +100,9 @@ RUN yum -y update \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/krb5-devel-1.15.1-55.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libcap-ng-0.7.5-4.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libcom_err-devel-1.42.9-19.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libdrm-2.4.97-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libdrm-devel-2.4.97-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libffi-3.0.13-19.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libfontenc-1.1.3-3.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libfontenc-devel-1.1.3-3.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libglvnd-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
@@ -109,6 +115,7 @@ RUN yum -y update \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libSM-1.2.2-2.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libSM-devel-1.2.2-2.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libuuid-2.23.2-65.el7_9.1.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libwayland-server-1.15.0-1.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libX11-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libX11-devel-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXau-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
@@ -125,6 +132,10 @@ RUN yum -y update \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXi-devel-1.7.9-1.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxkbfile-1.0.9-3.el7.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxkbfile-devel-1.0.9-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxshmfence-1.2-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxshmfence-devel-1.2-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libgbm-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libgbm-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libGL-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libGL-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
  && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-khr-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
