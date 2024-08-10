@@ -1,5 +1,9 @@
 FROM centos:7
 
+RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/@baseurl=https://vault\.centos\.org/@g' >/etc/yum.repos.d/CentOS-Base.repo.new \
+ && mv -f /etc/yum.repos.d/CentOS-Base.repo.new /etc/yum.repos.d/CentOS-Base.repo \
+ && cat /etc/yum.repos.d/CentOS-fasttrack.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/@baseurl=https://vault\.centos\.org/@g' >/etc/yum.repos.d/CentOS-fasttrack.repo.new \
+ && mv -f /etc/yum.repos.d/CentOS-fasttrack.repo.new /etc/yum.repos.d/CentOS-fasttrack.repo
 RUN yum -y update \
  && yum -y install epel-release.noarch \
  && yum -y install \
@@ -89,66 +93,66 @@ RUN yum -y update \
  && chown -R root:root gcc.arm64 \
  && mkdir arm64 \
  && pushd arm64 \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/audit-libs-2.8.5-4.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/bzip2-libs-1.0.6-13.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/bzip2-devel-1.0.6-13.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/expat-2.1.0-15.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/freetype-2.8-14.el7_9.1.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/freetype-devel-2.8-14.el7_9.1.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/glibc-2.17-326.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/glibc-devel-2.17-326.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/krb5-devel-1.15.1-55.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libcap-ng-0.7.5-4.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libcom_err-devel-1.42.9-19.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libdrm-2.4.97-2.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libdrm-devel-2.4.97-2.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libffi-3.0.13-19.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libfontenc-1.1.3-3.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libfontenc-devel-1.1.3-3.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libglvnd-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libglvnd-devel-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libglvnd-glx-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libICE-1.0.9-9.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libICE-devel-1.0.9-9.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libpng-1.5.13-8.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libpng-devel-1.5.13-8.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libSM-1.2.2-2.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libSM-devel-1.2.2-2.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libuuid-2.23.2-65.el7_9.1.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libwayland-server-1.15.0-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libX11-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/libX11-devel-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXau-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXau-devel-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxcb-1.13-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXdmcp-1.1.2-6.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXdmcp-devel-1.1.2-6.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXext-1.3.3-3.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXext-devel-1.3.3-3.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXfixes-devel-5.0.3-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXfont2-2.0.3-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXfont2-devel-2.0.3-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXi-1.7.9-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libXi-devel-1.7.9-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxkbfile-1.0.9-3.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxkbfile-devel-1.0.9-3.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxshmfence-1.2-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/libxshmfence-devel-1.2-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libgbm-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libgbm-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libGL-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-libGL-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/mesa-khr-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/openssl-libs-1.0.2k-26.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/openssl-devel-1.0.2k-26.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pam-1.1.8-23.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pam-devel-1.1.8-23.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pixman-0.34.0-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/pixman-devel-0.34.0-1.el7.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/xorg-x11-proto-devel-2018.4-1.el7.noarch.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/os/aarch64/Packages/xorg-x11-xtrans-devel-1.3.5-1.el7.noarch.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/zlib-1.2.7-21.el7_9.aarch64.rpm | cpio -idv \
- && rpm2cpio http://mirror.centos.org/altarch/7/updates/aarch64/Packages/zlib-devel-1.2.7-21.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/audit-libs-2.8.5-4.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/bzip2-libs-1.0.6-13.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/bzip2-devel-1.0.6-13.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//expat-2.1.0-15.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//freetype-2.8-14.el7_9.1.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//freetype-devel-2.8-14.el7_9.1.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//glibc-2.17-326.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//glibc-devel-2.17-326.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//krb5-devel-1.15.1-55.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libcap-ng-0.7.5-4.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libcom_err-devel-1.42.9-19.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libdrm-2.4.97-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libdrm-devel-2.4.97-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libffi-3.0.13-19.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libfontenc-1.1.3-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libfontenc-devel-1.1.3-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libglvnd-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libglvnd-devel-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libglvnd-glx-1.0.1-0.8.git5baa1e5.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libICE-1.0.9-9.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libICE-devel-1.0.9-9.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libpng-1.5.13-8.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libpng-devel-1.5.13-8.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libSM-1.2.2-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libSM-devel-1.2.2-2.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//libuuid-2.23.2-65.el7_9.1.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libwayland-server-1.15.0-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//libX11-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//libX11-devel-1.6.7-4.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXau-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXau-devel-1.0.8-2.1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libxcb-1.13-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXdmcp-1.1.2-6.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXdmcp-devel-1.1.2-6.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXext-1.3.3-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXext-devel-1.3.3-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXfixes-devel-5.0.3-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXfont2-2.0.3-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXfont2-devel-2.0.3-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXi-1.7.9-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libXi-devel-1.7.9-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libxkbfile-1.0.9-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libxkbfile-devel-1.0.9-3.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libxshmfence-1.2-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/libxshmfence-devel-1.2-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//mesa-libgbm-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//mesa-libgbm-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//mesa-libGL-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//mesa-libGL-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//mesa-khr-devel-18.3.4-12.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//openssl-libs-1.0.2k-26.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//openssl-devel-1.0.2k-26.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/pam-1.1.8-23.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/pam-devel-1.1.8-23.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/pixman-0.34.0-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/pixman-devel-0.34.0-1.el7.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/xorg-x11-proto-devel-2018.4-1.el7.noarch.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/os/aarch64/Packages/xorg-x11-xtrans-devel-1.3.5-1.el7.noarch.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//zlib-1.2.7-21.el7_9.aarch64.rpm | cpio -idv \
+ && rpm2cpio https://vault.centos.org/altarch/7.9.2009/updates/aarch64/Packages//zlib-devel-1.2.7-21.el7_9.aarch64.rpm | cpio -idv \
  && popd \
  && popd \
  && ln -fs /opt/arm64/usr/lib64/libm.so /opt/gcc.arm64/aarch64-none-linux-gnu/libc/usr/lib64/libm.so \
