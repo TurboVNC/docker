@@ -3,7 +3,12 @@ FROM centos:7
 RUN cat /etc/yum.repos.d/CentOS-Base.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/@baseurl=https://vault\.centos\.org/@g' >/etc/yum.repos.d/CentOS-Base.repo.new \
  && mv -f /etc/yum.repos.d/CentOS-Base.repo.new /etc/yum.repos.d/CentOS-Base.repo \
  && cat /etc/yum.repos.d/CentOS-fasttrack.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/@baseurl=https://vault\.centos\.org/@g' >/etc/yum.repos.d/CentOS-fasttrack.repo.new \
- && mv -f /etc/yum.repos.d/CentOS-fasttrack.repo.new /etc/yum.repos.d/CentOS-fasttrack.repo
+ && mv -f /etc/yum.repos.d/CentOS-fasttrack.repo.new /etc/yum.repos.d/CentOS-fasttrack.repo \
+ && yum -y install centos-release-scl \
+ && cat /etc/yum.repos.d/CentOS-SCLo-scl.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^# baseurl=http://mirror\.centos\.org/@baseurl=https://vault\.centos\.org/@g' >/etc/yum.repos.d/CentOS-SCLo-scl.repo.new \
+ && mv -f /etc/yum.repos.d/CentOS-SCLo-scl.repo.new /etc/yum.repos.d/CentOS-SCLo-scl.repo \
+ && cat /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo | sed s/^mirrorlist=/#mirrorlist=/g | sed 's@^#baseurl=http://mirror\.centos\.org/@baseurl=https://vault\.centos\.org/@g' >/etc/yum.repos.d/CentOS-SCLo-scl-rh.repo.new \
+ && mv -f /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo.new /etc/yum.repos.d/CentOS-SCLo-scl-rh.repo
 RUN yum -y update \
  && yum -y install epel-release.noarch \
  && yum -y install \
@@ -12,6 +17,7 @@ RUN yum -y update \
     binutils-devel \
     bzip2-devel \
     dbus-devel \
+    devtoolset-9-gcc \
     dpkg \
     elfutils-devel \
     elfutils-libelf-devel \
