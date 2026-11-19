@@ -48,6 +48,7 @@ RUN yum -y update \
     make \
     mesa-libgbm-devel \
     ncurses-devel \
+    ninja-build \
     openssl-devel \
     pam-devel \
     perl-ExtUtils-MakeMaker \
